@@ -44,6 +44,8 @@ h3 {
   grid-column: 1;
   grid-row: 1;
   z-index: 1;
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 
 #capture {
@@ -52,6 +54,8 @@ h3 {
   grid-column: 1;
   grid-row: 1;
   z-index: 2;
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 
 #capture1 {
@@ -60,6 +64,8 @@ h3 {
   grid-column: 1;
   grid-row: 1;
   z-index: 0;
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 
 #face_cover {

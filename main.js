@@ -125,15 +125,12 @@ function ncnn_liveness() {
         }
         else if(Math.abs(qaqarray[4 + 1]) > YAW_THRESHOLD) {//yaw
             msg = "Look Straight";
-            console.log("Look Straight yaw: " + Math.abs(qaqarray[4 + 1]));
         } 
         else if(Math.abs(qaqarray[5 + 1]) > PITCH_THRESHOLD) {//pitch
             msg = "Look Straight";
-            console.log("Look Straight pitch: " + Math.abs(qaqarray[5 + 1]));
         }
         else if(Math.abs(qaqarray[6 + 1]) > ROLL_THRESHOLD) {//roll
             msg = "Look Straight";
-            console.log("Look Straight roll: " + Math.abs(qaqarray[6 + 1]));
         }
         else if(qaqarray[9 + 1] > MASK_THRESHOLD) {//mask
             msg = "Mask Detected";
@@ -241,25 +238,28 @@ function isMobile() {
 
 function load() {
     if(isMobile()) {
-      document.getElementById("inputVideo").style.width = '480px'
-      document.getElementById("inputVideo").style.height = '640px'
 
-      document.getElementById("capture").style.width = '480px'
-      document.getElementById("capture").style.height = '640px'
+      document.getElementById("inputVideo").style.width = '720'
+      document.getElementById("inputVideo").style.height = '960'
 
-      document.getElementById("face_cover").style.width = '480px'
-      document.getElementById("face_cover").style.height = '640px'
+      document.getElementById("capture").style.width = '720'
+      document.getElementById("capture").style.height = '960'
 
-      document.getElementById("capture1").style.width = '480px'
-      document.getElementById("capture1").style.height = '640px'
+      document.getElementById("face_cover").style.width = '720'
+      document.getElementById("face_cover").style.height = '960'
 
-      document.getElementById("div_video").style.width = '480px'
-      document.getElementById("div_video").style.height = '640px'
+      document.getElementById("capture1").style.width = '720'
+      document.getElementById("capture1").style.height = '960'
+
+      document.getElementById("div_video").style.width = '720'
+      document.getElementById("div_video").style.height = '960'
 
       document.getElementById("face_cover").src = "face_cover_p.png";
 
       CAM_WIDTH = 480;
       CAM_HEIGHT = 640;
+
+
     } else {
       document.getElementById("inputVideo").style.width = '640px'
       document.getElementById("inputVideo").style.height = '480px'
