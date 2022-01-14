@@ -25,6 +25,7 @@ fetch('liveface.wasm')
         var script = document.createElement('script');
         script.src = 'liveface.js';
         script.onload = function() {
+            document.getElementById("camera").disabled = false;
             console.log('Emscripten boilerplate loaded.');
         }
         document.body.appendChild(script);
