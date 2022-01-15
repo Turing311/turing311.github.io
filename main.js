@@ -6,7 +6,7 @@ const MASK_THRESHOLD = 0.5;
 const SUNGLASS_THRESHOLD = 0.5;
 const EYE_DIST_THRESHOLD_MIN = 90;
 const EYE_DIST_THRESHOLD_MAX = 150;
-const BRISQUE_THRESHOLD = 40;
+const BRISQUE_THRESHOLD = 25;
 const LIVENESS_THRESHOLD = 0.7;
 const EYE_CLOSE_THRESHOLD = 0.8;
 
@@ -115,9 +115,7 @@ function ncnn_liveness() {
         var center_rect_x2 = (CAM_WIDTH / 2) + CENTER_R * 0.9;
         var center_rect_y2 = (CAM_HEIGHT / 2) + CENTER_R * 1.1;
 
-        if(isMobile()) {
-
-        }
+        console.log("brisque: " + qaqarray[7 + 1]);
 
         if(!(bbox_x >= center_rect_x1 && bbox_y >= center_rect_y1 && bbox_x < center_rect_x2 && bbox_y < center_rect_y2 &&
             bbox_x + bbox_w >= center_rect_x1 && bbox_y + bbox_h >= center_rect_y1 && bbox_x + bbox_w < center_rect_x2 && bbox_y + bbox_h < center_rect_y2)) {
@@ -147,7 +145,7 @@ function ncnn_liveness() {
             msg = "Go back";
         }
         else if(qaqarray[7 + 1] > BRISQUE_THRESHOLD) {//brisque
-            msg = "Hold Still";
+            msg = "Hold Still" + qaqarray[7 + 1];
         }
         else if(qaqarray[16 + 1] < LIVENESS_THRESHOLD) {//liveness
             msg = "Spoof Detected";
@@ -157,11 +155,11 @@ function ncnn_liveness() {
 
             const cb = document.querySelector('#autoCapture');
             if(cb.checked) {
-                const video = document.getElementById("inputVideo");
+                const video = document.getElementById("capture1");
                 const canvas = document.getElementById("capture");
                 canvas.style.opacity="1.0";
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
+                canvas.width = video.width;
+                canvas.height = video.height;
                 canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
             
                 const videoEl = document.getElementById('inputVideo')
