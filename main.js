@@ -145,13 +145,13 @@ function ncnn_liveness() {
             msg = "Go back";
         }
         else if(qaqarray[7 + 1] > BRISQUE_THRESHOLD) {//brisque
-            msg = "Hold Still " + qaqarray[7 + 1];
+            msg = "Hold Still";
         }
         else if(qaqarray[16 + 1] < LIVENESS_THRESHOLD) {//liveness
             msg = "Spoof Detected";
         }
         else if(old_liveness1 > LIVENESS_THRESHOLD && old_liveness2 > LIVENESS_THRESHOLD){
-            msg = "Selfie OK " +  + qaqarray[7 + 1];
+            msg = "Selfie OK";
 
             const cb = document.querySelector('#autoCapture');
             if(cb.checked) {
