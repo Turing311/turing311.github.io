@@ -6,7 +6,7 @@ const MASK_THRESHOLD = 0.5;
 const SUNGLASS_THRESHOLD = 0.5;
 const EYE_DIST_THRESHOLD_MIN = 90;
 const EYE_DIST_THRESHOLD_MAX = 150;
-const BRISQUE_THRESHOLD = 25;
+const BRISQUE_THRESHOLD = 12;
 const LIVENESS_THRESHOLD = 0.7;
 const EYE_CLOSE_THRESHOLD = 0.8;
 
@@ -115,8 +115,6 @@ function ncnn_liveness() {
         var center_rect_x2 = (CAM_WIDTH / 2) + CENTER_R * 0.9;
         var center_rect_y2 = (CAM_HEIGHT / 2) + CENTER_R * 1.1;
 
-        console.log("brisque: " + qaqarray[7 + 1]);
-
         if(!(bbox_x >= center_rect_x1 && bbox_y >= center_rect_y1 && bbox_x < center_rect_x2 && bbox_y < center_rect_y2 &&
             bbox_x + bbox_w >= center_rect_x1 && bbox_y + bbox_h >= center_rect_y1 && bbox_x + bbox_w < center_rect_x2 && bbox_y + bbox_h < center_rect_y2)) {
             msg = "Move to center";
@@ -144,7 +142,7 @@ function ncnn_liveness() {
         } else if(qaqarray[8 + 1] > EYE_DIST_THRESHOLD_MAX) {//eyedist
             msg = "Go back";
         }
-        else if(qaqarray[7 + 1] > BRISQUE_THRESHOLD) {//brisque
+        else if(qaqarray[7 + 1] < BRISQUE_THRESHOLD) {//brisque
             msg = "Hold Still";
         }
         else if(qaqarray[16 + 1] < LIVENESS_THRESHOLD) {//liveness
@@ -194,6 +192,7 @@ function ncnn_liveness() {
     document.getElementById("res_leftEye").innerHTML = "Left Eye: (" + qaqarray[12 + 1] + ", " + qaqarray[13 + 1] + ")";
     document.getElementById("res_rightEye").innerHTML = "Right Eye: (" + qaqarray[14 + 1] + ", " + qaqarray[15 + 1] + ")";
     document.getElementById("res_faceScore").innerHTML = "Face Score: " + qaqarray[17 + 1];
+    document.getElementById("res_liveness").innerHTML = "Live Score: " + qaqarray[16 + 1];
 
     
     _free(resultbuffer);
