@@ -17,6 +17,9 @@ h3 {
 }
 
 
+.msg_label {
+  color: white;
+}
 
 #cap_message {
   color: rgb(216, 214, 214); 

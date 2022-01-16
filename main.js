@@ -183,7 +183,19 @@ function ncnn_liveness() {
     }
 
     document.getElementById("cap_message").innerHTML = msg;
+    document.getElementById("res_yaw").innerHTML = "Yaw: " + qaqarray[4 + 1];
+    document.getElementById("res_pitch").innerHTML = "Pitch: " + qaqarray[5 + 1];
+    document.getElementById("res_roll").innerHTML = "Roll: " + qaqarray[6 + 1];
+    document.getElementById("res_brisque").innerHTML = "Brisque: " + qaqarray[7 + 1];
+    document.getElementById("res_eyeDist").innerHTML = "Eye Dist: " + qaqarray[8 + 1];
+    document.getElementById("res_eyeClosed").innerHTML = "Eye Closed: " + qaqarray[11 + 1];
+    document.getElementById("res_mask").innerHTML = "Mask: " + qaqarray[9 + 1];
+    document.getElementById("res_sunglass").innerHTML = "Sunglass: " + qaqarray[10 + 1];
+    document.getElementById("res_leftEye").innerHTML = "Left Eye: (" + qaqarray[12 + 1] + ", " + qaqarray[13 + 1] + ")";
+    document.getElementById("res_rightEye").innerHTML = "Right Eye: (" + qaqarray[14 + 1] + ", " + qaqarray[15 + 1] + ")";
+    document.getElementById("res_faceScore").innerHTML = "Face Score: " + qaqarray[17 + 1];
 
+    
     _free(resultbuffer);
     _free(dst);
 }
