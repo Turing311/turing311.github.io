@@ -19,9 +19,6 @@ var old_liveness2 = 0;
 
 var Module = {};
 
-var has_simd;
-var has_threads;
-
 var wasmModuleLoaded = false;
 var wasmModuleLoadedCallbacks = [];
 
