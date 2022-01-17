@@ -27,6 +27,7 @@ Module.onRuntimeInitialized = function() {
     for (var i = 0; i < wasmModuleLoadedCallbacks.length; i++) {
         wasmModuleLoadedCallbacks[i]();
     }
+    document.getElementById("camera").disabled = false;
 }
 
 fetch('liveface.wasm')
@@ -37,7 +38,6 @@ fetch('liveface.wasm')
     script.src = 'liveface.js';
     script.onload = function() {
         console.log('Emscripten boilerplate loaded.');
-        document.getElementById("camera").disabled = false;
     }
     document.body.appendChild(script);
 });
