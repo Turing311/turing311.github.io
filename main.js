@@ -18,34 +18,19 @@ var old_liveness1 = 0;
 var old_liveness2 = 0;
 
 var Module = {};
-
-var has_simd;
-var has_threads;
-
-var wasmModuleLoaded = false;
-var wasmModuleLoadedCallbacks = [];
-
-Module.onRuntimeInitialized = function() {
-    wasmModuleLoaded = true;
-    for (var i = 0; i < wasmModuleLoadedCallbacks.length; i++) {
-        wasmModuleLoadedCallbacks[i]();
-    }
-}
-
 fetch('liveface.wasm')
-.then(response => response.arrayBuffer())
-.then(buffer => {
-    Module.wasmBinary = buffer;
-    var script = document.createElement('script');
-    script.src = 'liveface.js';
-    script.onload = function() {
-        console.log('Emscripten boilerplate loaded.');
-        document.getElementById("camera").disabled = false;
-    }
-    document.body.appendChild(script);
-});
-
-
+    .then(response => response.arrayBuffer())
+    .then(buffer => {
+        Module.wasmBinary = buffer;
+        var script = document.createElement('script');
+        script.src = 'liveface.js';
+        script.onload = function() {
+            document.getElementById("camera").disabled = false;
+            console.log('Emscripten boilerplate loaded.');
+        }
+        document.body.appendChild(script);
+    });
+            
 function ncnn_liveness() {
     const video = document.getElementById("inputVideo");
     const canvas1 = document.getElementById("capture1");
