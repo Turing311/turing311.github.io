@@ -71,12 +71,22 @@ h3 {
   transform: scaleX(-1);
 }
 
+#best_capture {
+  width: 640;
+  height: 480;
+  grid-column: 1;
+  grid-row: 1;
+  z-index: 3;
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  visibility: hidden;
+}
+
 #face_cover {
   width: 640;
   height: 480;
   grid-column: 1;
   grid-row: 1;
-  background-color: rebeccapurple;
   z-index: 3;
   visibility: hidden;
 }

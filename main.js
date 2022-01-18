@@ -1,13 +1,13 @@
 
-const PITCH_THRESHOLD = 20;
-const YAW_THRESHOLD = 10;
+const PITCH_THRESHOLD = 7;
+const YAW_THRESHOLD = 7;
 const ROLL_THRESHOLD = 10;
 const MASK_THRESHOLD = 0.5;
 const SUNGLASS_THRESHOLD = 0.5;
 const EYE_DIST_THRESHOLD_MIN = 90;
 const EYE_DIST_THRESHOLD_MAX = 150;
 const BRISQUE_THRESHOLD = 12;
-const LIVENESS_THRESHOLD = 0.7;
+const LIVENESS_THRESHOLD = 0.5;
 const EYE_CLOSE_THRESHOLD = 0.8;
 
 var CAM_WIDTH = 640;
@@ -16,6 +16,11 @@ const CENTER_R = 190;
 
 var old_liveness1 = 0;
 var old_liveness2 = 0;
+var best_yaw = 0;
+var best_pitch = 0;
+var best_roll = 0;
+var best_brisque = 0;
+var brisque_count = 0;
 
 var Module = {};
 
@@ -115,12 +120,8 @@ function ncnn_liveness() {
 
     if (count == 0) {
         msg = "No Person Detected"
-        old_liveness1 = 0;
-        old_liveness2 = 0;
     } else if(count > 1) {
         msg = "Multiple Person Detected"
-        old_liveness1 = 0;
-        old_liveness2 = 0;
     } else {
         var center_rect_x1 = (CAM_WIDTH / 2) - CENTER_R * 0.9;
         var center_rect_y1 = (CAM_HEIGHT / 2) - CENTER_R;
@@ -130,56 +131,98 @@ function ncnn_liveness() {
         if(!(bbox_x >= center_rect_x1 && bbox_y >= center_rect_y1 && bbox_x < center_rect_x2 && bbox_y < center_rect_y2 &&
             bbox_x + bbox_w >= center_rect_x1 && bbox_y + bbox_h >= center_rect_y1 && bbox_x + bbox_w < center_rect_x2 && bbox_y + bbox_h < center_rect_y2)) {
             msg = "Move to center";
+            brisque_count = 0;
         }
         else if(Math.abs(qaqarray[4 + 1]) > YAW_THRESHOLD) {//yaw
             msg = "Look Straight";
+            brisque_count = 0;
         } 
         else if(Math.abs(qaqarray[5 + 1]) > PITCH_THRESHOLD) {//pitch
             msg = "Look Straight";
+            brisque_count = 0;
         }
         else if(Math.abs(qaqarray[6 + 1]) > ROLL_THRESHOLD) {//roll
             msg = "Look Straight";
+            brisque_count = 0;
         }
         else if(qaqarray[9 + 1] > MASK_THRESHOLD) {//mask
             msg = "Mask Detected";
+            brisque_count = 0;
         }
         else if(qaqarray[10 + 1] > SUNGLASS_THRESHOLD) {//sunglass
             msg = "Sunglass Detected";
+            brisque_count = 0;
         }
         else if(qaqarray[11 + 1] < EYE_CLOSE_THRESHOLD) {//eyeclose
             msg = "Eye Closed";
+            brisque_count = 0;
         }
         else if(qaqarray[8 + 1] < EYE_DIST_THRESHOLD_MIN) {//eyedist
             msg = "Move Closer";
+            brisque_count = 0;
         } else if(qaqarray[8 + 1] > EYE_DIST_THRESHOLD_MAX) {//eyedist
             msg = "Go back";
+            brisque_count = 0;
         }
         else if(qaqarray[7 + 1] < BRISQUE_THRESHOLD) {//brisque
             msg = "Hold Still";
+            brisque_count = 0;
         }
         else if(qaqarray[16 + 1] < LIVENESS_THRESHOLD) {//liveness
             msg = "Spoof Detected";
+            brisque_count = 0;
         }
-        else if(old_liveness1 > LIVENESS_THRESHOLD && old_liveness2 > LIVENESS_THRESHOLD){
+        else{
             msg = "Selfie OK";
 
-            const cb = document.querySelector('#autoCapture');
-            if(cb.checked) {
+            if(best_brisque == 0) {
+                best_brisque = qaqarray[7 + 1];
+                best_yaw = Math.abs(qaqarray[4 + 1]);
+                best_pitch = Math.abs(qaqarray[5 + 1]);
+                best_roll = Math.abs(qaqarray[6 + 1]);
+
                 const video = document.getElementById("capture1");
+                const canvas = document.getElementById("best_capture");
+                canvas.width = video.width
+                canvas.height = video.height
+                canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+            } else {
+                var is_better = 0;
+                if(qaqarray[7 + 1] < best_brisque) {
+                    is_better = 0;
+                } else {
+                    is_better = 1;
+
+                    best_brisque = qaqarray[7 + 1];
+                    best_yaw = Math.abs(qaqarray[4 + 1]);
+                    best_pitch = Math.abs(qaqarray[5 + 1]);
+                    best_roll = Math.abs(qaqarray[6 + 1]);
+
+                    const video = document.getElementById("capture1");
+                    const canvas = document.getElementById("best_capture");
+                    canvas.width = video.width
+                    canvas.height = video.height    
+                    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);    
+                }
+            }
+            
+            brisque_count ++;
+            const cb = document.querySelector('#autoCapture');
+            if(cb.checked && brisque_count >= 5) {
+                const video = document.getElementById("best_capture");
                 const canvas = document.getElementById("capture");
                 canvas.style.opacity="1.0";
-                canvas.width = video.width;
-                canvas.height = video.height;
+                canvas.width = video.width
+                canvas.height = video.height
                 canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
             
                 const videoEl = document.getElementById('inputVideo')
                 videoEl.srcObject = null
+                brisque_count = 0;
 
                 document.getElementById('camera').innerText = "Start Camera";
                 document.getElementById("face_cover").style.visibility = "hidden";
             }
-        } else {
-            msg = "Selfie OK";
         }
 
         if(old_liveness1 == 0) {
@@ -191,7 +234,7 @@ function ncnn_liveness() {
             old_liveness2 = qaqarray[16 + 1];
         }
     }
-
+    
     document.getElementById("cap_message").innerHTML = msg;
     document.getElementById("res_yaw").innerHTML = "Yaw: " + qaqarray[4 + 1];
     document.getElementById("res_pitch").innerHTML = "Pitch: " + qaqarray[5 + 1];
@@ -205,7 +248,6 @@ function ncnn_liveness() {
     document.getElementById("res_rightEye").innerHTML = "Right Eye: (" + qaqarray[14 + 1] + ", " + qaqarray[15 + 1] + ")";
     document.getElementById("res_faceScore").innerHTML = "Face Score: " + qaqarray[17 + 1];
     document.getElementById("res_liveness").innerHTML = "Live Score: " + qaqarray[16 + 1];
-
     
     _free(resultbuffer);
     _free(dst);
@@ -239,6 +281,7 @@ async function startCamera() {
     videoEl.srcObject = stream  
     old_liveness1 = 0;
     old_liveness2 = 0;
+    brisque_count = 0;
 
   } else {
     const canvas = document.getElementById("capture");
@@ -272,6 +315,9 @@ function load() {
       document.getElementById("capture1").style.width = '720'
       document.getElementById("capture1").style.height = '960'
 
+      document.getElementById("best_capture").style.width = '720'
+      document.getElementById("best_capture").style.height = '960'
+
       document.getElementById("div_video").style.width = '720'
       document.getElementById("div_video").style.height = '960'
 
@@ -279,8 +325,6 @@ function load() {
 
       CAM_WIDTH = 480;
       CAM_HEIGHT = 640;
-
-
     } else {
       document.getElementById("inputVideo").style.width = '640px'
       document.getElementById("inputVideo").style.height = '480px'
@@ -293,6 +337,9 @@ function load() {
 
       document.getElementById("capture1").style.width = '640px'
       document.getElementById("capture1").style.height = '480px'
+      
+      document.getElementById("best_capture").style.width = '640px'
+      document.getElementById("best_capture").style.height = '480px'
 
       document.getElementById("div_video").style.width = '640px'
       document.getElementById("div_video").style.height = '480px'
