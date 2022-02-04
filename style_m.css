@@ -2,14 +2,14 @@ body {
 	font-family: sans-serif;
 	text-align: center;
   margin-top: 1rem;
-	font-size: 2.25rem;
+	font-size: 2rem;
 	line-height: 1.5;
 	transition: all 725ms ease-in-out;
   background-color: #090A26;
 }
 
 h3 {
-	font-size: 4rem;
+	font-size: 3rem;
 	font-weight: bolder;
 	margin-bottom: 1rem;
   color: aliceblue;
@@ -22,7 +22,7 @@ h3 {
 
 #cap_message {
   color: rgb(216, 214, 214); 
-  font-size: 2.6rem;
+  font-size: 2rem;
   margin-bottom: 2rem;
 }
 
