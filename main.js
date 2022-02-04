@@ -17,7 +17,7 @@ Module.onRuntimeInitialized = function () {
 
     var enc = new TextEncoder();
     var licenseStr = "PRiRREuPCZ1m5ASgF7fcpgm0nBGhi8B2AblTE+h0k4Eb93ij+U3stRYNGdOk3TqB9LqyRo9GmtzmLln4KOxL418hdoH58IkFmCJWnLCyqFhr4BGsbRfajXWLpVQmSX6q7JBi7RH8Y38S4chhGHGJMsr/Jw+WPPuEV+EY5Gz7VsMkpKygP7wkjt9Q62uM8WGpsh1nyK4zA3td78cRxh/OvU3jW0O5pgmPDg5z2ZPZS/5aNaruKkOu0ioDbbl3Xq3c6c1hYkMGq01Kv4stsA98YF9YsIDUfpUfCXr4omvsXsu3IVSVpeoxaI1KonveyoBb1wnOvBi3+62/hDyU2AejKA==";
-    //   var licenseStr ='06406b07507c00306606507e07606307307506807207506e00500405605905801c05a05505b043'  
+    //   var licenseStr ='06406b07507c003066065077e07606307307506807207506e00500405605905801c05a05505b043'  
     stringArray = enc.encode(licenseStr)
     stringBuffer = _malloc(licenseStr.length + 1 * Int8Array.BYTES_PER_ELEMENT);
     HEAPU8.set(stringArray, stringBuffer / Int8Array.BYTES_PER_ELEMENT);
@@ -60,6 +60,7 @@ function send_image(photo) {
         document.getElementById('camera').disabled = false;
         document.getElementById('div_loader').style.display = 'none';
         document.getElementById("capture").style.opacity = "1.0";
+        document.getElementById("inputVideo").style.outlineStyle='none'
     }).catch((error) => {
         document.getElementById('liveness_error_msg').innerText = error
         document.getElementById('liveness_error_msg').style.color = 'red';
@@ -67,6 +68,7 @@ function send_image(photo) {
         document.getElementById('camera').disabled = false;
         document.getElementById('div_loader').style.display = 'none';
         document.getElementById("capture").style.opacity = "1.0";
+        document.getElementById("inputVideo").style.outlineStyle='none'
     });
 }
 
@@ -105,6 +107,14 @@ function ncnn_liveness() {
     var dec = new TextDecoder();
     var msg = dec.decode(msgStringArr);
     document.getElementById("cap_message").innerHTML = msg;
+    if(msg == "Selfie Ok!") {
+        document.getElementById("inputVideo").style.outlineStyle='solid'
+        document.getElementById("inputVideo").style.outlineColor='green'
+    } else {
+        document.getElementById("inputVideo").style.outlineStyle='solid'
+        document.getElementById("inputVideo").style.outlineColor='red'
+    }
+
     if (capture_ok) {
         const cb = document.querySelector('#autoCapture');
         if (cb.checked) {
@@ -205,6 +215,7 @@ async function startCamera() {
 
         videoEl.srcObject = null
         document.getElementById('camera').innerText = "Start Camera";
+        document.getElementById("inputVideo").style.outlineStyle='none'
     }
 }
 
@@ -233,21 +244,6 @@ function load() {
             link.media = 'all';
             head.appendChild(link);
         }
-
-        document.getElementById("inputVideo").style.width = '960'
-        document.getElementById("inputVideo").style.height = '1280'
-
-        document.getElementById("capture").style.width = '960'
-        document.getElementById("capture").style.height = '1280'
-
-        document.getElementById("face_cover").style.width = '960'
-        document.getElementById("face_cover").style.height = '1280'
-
-        document.getElementById("capture1").style.width = '960'
-        document.getElementById("capture1").style.height = '1280'
-
-        document.getElementById("div_video").style.width = '960'
-        document.getElementById("div_video").style.height = '1280'
 
         document.getElementById("face_cover").src = "face_cover_p.png";
     } else {

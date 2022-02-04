@@ -65,6 +65,9 @@ h3 {
   z-index: 1;
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
+  outline-style: none
+  outline-color: lightgreen;
+  outline-width: thick; 
 }
 
 #capture {
