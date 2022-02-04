@@ -134,11 +134,22 @@ function ncnn_liveness() {
                 var dec = new TextDecoder();
                 var result_str = dec.decode(resultString);
 
-                const canvas = document.getElementById("capture");
-                canvas.style.opacity = "0.5";
-                canvas.width = video.videoWidth
-                canvas.height = video.videoHeight
-                canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);           
+                var image = new Image();
+                image.src = 'data:image/jpg;base64,' + result_str;
+                image.onload = function() {
+                    const canvas = document.getElementById("capture");
+                    canvas.style.opacity="1.0";
+                    canvas.width = image.width
+                    canvas.height = image.height
+                    canvas.getContext('2d').drawImage(this, 0, 0, canvas.width, canvas.height);
+
+                }   
+                
+                // const canvas = document.getElementById("capture");
+                // canvas.style.opacity = "0.5";
+                // canvas.width = video.videoWidth
+                // canvas.height = video.videoHeight
+                // canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);           
 
                 const videoEl = document.getElementById('inputVideo')
                 videoEl.srcObject = null
@@ -244,6 +255,10 @@ function load() {
                 }
             }
         }
+    }
+
+    if(isMobile()) {
+        document.getElementById("face_cover").src = "face_cover_p.png";
     }
 }
 window.onload = load;
