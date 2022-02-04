@@ -56,8 +56,8 @@ h3 {
   z-index: 1;
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
-  outline-style: none
-  outline-color: lightgreen;
+  outline-style: none;
+  outline-color: green;
   outline-width: thick; 
 }
 
