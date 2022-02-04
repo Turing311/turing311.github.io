@@ -1,7 +1,7 @@
 body {
 	font-family: sans-serif;
 	text-align: center;
-  margin-top: 4rem;
+  margin-top: 1rem;
 	font-size: 2.25rem;
 	line-height: 1.5;
 	transition: all 725ms ease-in-out;
@@ -30,20 +30,27 @@ h3 {
   margin-top: 2rem;  
 }
 
+#autoCapture {
+  width: 24px;
+  height: 24px;
+}
+
 #label_auto_capture {
   color: white;
   margin-right: 2rem;  
-  font-size: 2.6rem;
+  font-size: 2rem;
 }
 
 #camera {
   width: 12rem;
+  height: 3rem;
   margin-left: 1rem;
   margin-right: 1rem;
 }
 
 #captureButton {
   width: 12rem;
+  height: 3rem;
   margin-left: 2rem;
 }
 
