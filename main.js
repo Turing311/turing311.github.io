@@ -230,34 +230,19 @@ function isMobile() {
 
 
 function load() {
-    if (isMobile()) {
 
-        var cssId = 'myCss';  // you could encode the css path itself to generate id..
-        if (!document.getElementById(cssId))
-        {
-            var head  = document.getElementsByTagName('head')[0];
-            var link  = document.createElement('link');
-            link.id   = cssId;
-            link.rel  = 'stylesheet';
-            link.type = 'text/css';
-            link.href = 'style_m.css';
-            link.media = 'all';
-            head.appendChild(link);
-        }
+    let links = document.getElementsByTagName('link');
+    for (let i = 0; i < links.length; i++) {
+        if (links[i].getAttribute('rel') == 'stylesheet') {
+            let href = links[i].getAttribute('href')
+                                    .split('?')[0];
 
-        document.getElementById("face_cover").src = "face_cover_p.png";
-    } else {
-        var cssId = 'myCss';  // you could encode the css path itself to generate id..
-        if (!document.getElementById(cssId))
-        {
-            var head  = document.getElementsByTagName('head')[0];
-            var link  = document.createElement('link');
-            link.id   = cssId;
-            link.rel  = 'stylesheet';
-            link.type = 'text/css';
-            link.href = 'style_d.css';
-            link.media = 'all';
-            head.appendChild(link);
+
+            if(href == 'style_d.css') {
+                if(isMobile()) {
+                    links[i].setAttribute('href', 'style_m.css');
+                }
+            }
         }
     }
 }
