@@ -1,8 +1,7 @@
 body {
 	font-family: sans-serif;
 	text-align: center;
-	padding: 3rem;
-  margin-top: 1rem;
+  margin-top: 4rem;
 	font-size: 1.125rem;
 	line-height: 1.5;
 	transition: all 725ms ease-in-out;
@@ -37,12 +36,19 @@ h3 {
 }
 
 #camera {
-  margin-left: 2rem;  
+  width: 8rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+#captureButton {
+  width: 8rem;
+  margin-left: 2rem;
 }
 
 #inputVideo {
-  width: 640px; 
-  height: 480px;
+  width: 960; 
+  height: 1280;
   background-color: black;
   grid-column: 1;
   grid-row: 1;
@@ -52,8 +58,8 @@ h3 {
 }
 
 #capture {
-  width: 640;
-  height: 480;
+  width: 960; 
+  height: 1280;
   grid-column: 1;
   grid-row: 1;
   z-index: 2;
@@ -62,8 +68,8 @@ h3 {
 }
 
 #capture1 {
-  width: 640;
-  height: 480;
+  width: 960; 
+  height: 1280;
   grid-column: 1;
   grid-row: 1;
   z-index: 0;
@@ -72,8 +78,8 @@ h3 {
 }
 
 #face_cover {
-  width: 640;
-  height: 480;
+  width: 960; 
+  height: 1280;
   grid-column: 1;
   grid-row: 1;
   background-color: rebeccapurple;
@@ -83,8 +89,13 @@ h3 {
 
 #div_video {
   display: grid;
-  width: 640;
-  height: 480;
+  width: 960; 
+  height: 1280;
   margin: auto;
+}
+
+#liveness_error_msg {
+  color: greenyellow;  
+  margin-top: 1rem;
 }
 

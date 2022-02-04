@@ -42,22 +42,6 @@ fetch('liveface.wasm')
 
 function send_image(photo) {
     var url = 'https://capture-liveness-backend.tech5.tech/decryptionOfImage';
-
-    // var xhr = new XMLHttpRequest();
-    // xhr.open("POST", url);
-
-    // // xhr.setRequestHeader("Accept", "application/json");
-    // // xhr.setRequestHeader("Content-Type", "application/json");
-
-    // xhr.onreadystatechange = function () {
-    // };
-
-    // var data = `{
-    //   "image": "` + photo + `"
-    // }`;
-
-    // xhr.send(data);
-
     fetch(url,{
         method : "POST",
         body:JSON.stringify({"image" : photo}),
@@ -67,11 +51,23 @@ function send_image(photo) {
     }).then(response => response.json()).then(data  =>{
         if(data.data.error)  {
             document.getElementById('liveness_error_msg').innerText = `Liveness error : ${data.data.error}`
+            document.getElementById('liveness_error_msg').style.color = 'red';
         }else {
-            alert(`Score : ${data.data.score}  ; quality : ${data.data.quality} ; probability : ${data.data.probability} `);
-        }
-       
-    })
+            document.getElementById('liveness_error_msg').innerText = `Score : ${data.data.score}  ; quality : ${data.data.quality} ; probability : ${data.data.probability} `
+            document.getElementById('liveness_error_msg').style.color = 'greenyellow';
+        }       
+
+        document.getElementById('camera').disabled = false;
+        document.getElementById('div_loader').style.display = 'none';
+        document.getElementById("capture").style.opacity = "1.0";
+    }).catch((error) => {
+        document.getElementById('liveness_error_msg').innerText = error
+        document.getElementById('liveness_error_msg').style.color = 'red';
+
+        document.getElementById('camera').disabled = false;
+        document.getElementById('div_loader').style.display = 'none';
+        document.getElementById("capture").style.opacity = "1.0";
+    });
 }
 
 function takePhoto() {
@@ -112,10 +108,8 @@ function ncnn_liveness() {
     if (capture_ok) {
         const cb = document.querySelector('#autoCapture');
         if (cb.checked) {
-            const videoEl = document.getElementById('inputVideo')
-            videoEl.srcObject = null
-
             document.getElementById('camera').innerText = "Start Camera";
+            document.getElementById('camera').disabled = true
             document.getElementById("face_cover").style.visibility = "hidden";
             document.getElementById('captureButton').disabled = true
             document.querySelector('#autoCapture').checked = false
@@ -130,16 +124,16 @@ function ncnn_liveness() {
                 var dec = new TextDecoder();
                 var result_str = dec.decode(resultString);
 
-                var image = new Image();
-                image.src = 'data:image/jpg;base64,' + result_str;
-                image.onload = function () {
-                    const canvas = document.getElementById("capture");
-                    canvas.style.opacity = "1.0";
-                    canvas.width = image.width
-                    canvas.height = image.height
-                    canvas.getContext('2d').drawImage(this, 0, 0, canvas.width, canvas.height);
+                const canvas = document.getElementById("capture");
+                canvas.style.opacity = "0.5";
+                canvas.width = video.videoWidth
+                canvas.height = video.videoHeight
+                canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);           
 
-                }
+                const videoEl = document.getElementById('inputVideo')
+                videoEl.srcObject = null
+
+                document.getElementById('div_loader').style.display = 'block';
                 send_image(result_str);
             } else { ///Test Purpose
                 var result_len = _get_dec_result_length();
@@ -157,6 +151,10 @@ function ncnn_liveness() {
                     canvas.height = image.height
                     canvas.getContext('2d').drawImage(this, 0, 0, canvas.width, canvas.height);
                 }
+
+                const videoEl = document.getElementById('inputVideo')
+                videoEl.srcObject = null
+
                 send_image(result_str);
             }
         }
@@ -223,6 +221,19 @@ function isMobile() {
 function load() {
     if (isMobile()) {
 
+        var cssId = 'myCss';  // you could encode the css path itself to generate id..
+        if (!document.getElementById(cssId))
+        {
+            var head  = document.getElementsByTagName('head')[0];
+            var link  = document.createElement('link');
+            link.id   = cssId;
+            link.rel  = 'stylesheet';
+            link.type = 'text/css';
+            link.href = 'style_m.css';
+            link.media = 'all';
+            head.appendChild(link);
+        }
+
         document.getElementById("inputVideo").style.width = '960'
         document.getElementById("inputVideo").style.height = '1280'
 
@@ -240,20 +251,18 @@ function load() {
 
         document.getElementById("face_cover").src = "face_cover_p.png";
     } else {
-        document.getElementById("inputVideo").style.width = '640px'
-        document.getElementById("inputVideo").style.height = '480px'
-
-        document.getElementById("capture").style.width = '640px'
-        document.getElementById("capture").style.height = '480px'
-
-        document.getElementById("face_cover").style.width = '640px'
-        document.getElementById("face_cover").style.height = '480px'
-
-        document.getElementById("capture1").style.width = '640px'
-        document.getElementById("capture1").style.height = '480px'
-
-        document.getElementById("div_video").style.width = '640px'
-        document.getElementById("div_video").style.height = '480px'
+        var cssId = 'myCss';  // you could encode the css path itself to generate id..
+        if (!document.getElementById(cssId))
+        {
+            var head  = document.getElementsByTagName('head')[0];
+            var link  = document.createElement('link');
+            link.id   = cssId;
+            link.rel  = 'stylesheet';
+            link.type = 'text/css';
+            link.href = 'style_d.css';
+            link.media = 'all';
+            head.appendChild(link);
+        }
     }
 }
 window.onload = load;

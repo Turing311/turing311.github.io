@@ -2,13 +2,14 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Phoenix Demo 020301</title>
+    <title>Phoenix Demo 020401</title>
     <script src="https://unpkg.com/lodash@4/lodash.min.js"></script>
     <script src="https://unpkg.com/lowdb@0.17/dist/low.min.js"></script>
     <script src="https://unpkg.com/lowdb@0.17/dist/LocalStorage.min.js"></script>
    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+    <link rel="stylesheet" type="text/css" href="custom_loader.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.1/pnotify.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.1/pnotify.brighttheme.css">
@@ -22,16 +23,17 @@
       <canvas id="capture"></canvas>
       <img src="face_cover.png" id="face_cover"/>
       <canvas id="capture1"></canvas>
+      <div id="div_loader" class="loader-in"></div>
     </div>
     <div>
-      <label id="liveness_error_msg" style="color: white;"></label>
+      <label id="liveness_error_msg" ></label>
     </div>
     <div id="nav">
       <label id="label_auto_capture" for="autoCapture">
         <input type="checkbox" id="autoCapture" name="autoCapture" value="yes">  Auto Capture 
      </label>
      <button id="camera" disabled="true" class="btn btn-success" onclick="javascript:startCamera()">Start Camera</button>  
-     <button id="captureButton" disabled="true" class="btn btn-success" onclick="javascript:takePhoto()">Capture</button>
+     <button id="captureButton" disabled="true" class="btn btn-warning" onclick="javascript:takePhoto()">Capture</button>
     </div>
 
     <div class="msg_label" id="res_yaw"></div>
