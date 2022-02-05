@@ -144,7 +144,7 @@ function ncnn_liveness() {
                     canvas.getContext('2d').drawImage(this, 0, 0, canvas.width, canvas.height);
 
                 }   
-                
+
                 // const canvas = document.getElementById("capture");
                 // canvas.style.opacity = "0.5";
                 // canvas.width = video.videoWidth
@@ -248,7 +248,6 @@ function load() {
             let href = links[i].getAttribute('href')
                                     .split('?')[0];
 
-
             if(href == 'style_d.css') {
                 if(isMobile()) {
                     links[i].setAttribute('href', 'style_m.css');
@@ -256,7 +255,7 @@ function load() {
             }
         }
     }
-
+    
     if(isMobile()) {
         document.getElementById("face_cover").src = "face_cover_p.png";
     }
