@@ -1,15 +1,16 @@
 body {
 	font-family: sans-serif;
 	text-align: center;
-  margin-top: 1.5rem;
-	font-size: 2.2rem;
+	padding: 3rem;
+  margin-top: 1rem;
+	font-size: 1.125rem;
 	line-height: 1.5;
 	transition: all 725ms ease-in-out;
   background-color: #090A26;
 }
 
 h3 {
-	font-size: 3.5rem;
+	font-size: 2rem;
 	font-weight: bolder;
 	margin-bottom: 1rem;
   color: aliceblue;
@@ -22,57 +23,37 @@ h3 {
 
 #cap_message {
   color: rgb(216, 214, 214); 
-  font-size: 2rem;
-  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  margin-bottom: 2rem;
 }
 
 #nav {
-  margin-top: 1rem;  
-}
-
-#autoCapture {
-  width: 24px;
-  height: 24px;
+  margin-top: 2rem;  
 }
 
 #label_auto_capture {
   color: white;
   margin-right: 2rem;  
-  font-size: 2rem;
 }
 
 #camera {
-  width: 14rem;
-  height: 3.5rem;
-  margin-left: 1rem;
-  margin-right: 1rem;
-  font-size: 228px4px;
-}
-
-#captureButton {
-  width: 14rem;
-  height: 3.5rem;
-  margin-left: 2rem;
-  font-size: 28px;
+  margin-left: 2rem;  
 }
 
 #inputVideo {
-  width: 960; 
-  height: 1280;
+  width: 640px; 
+  height: 480px;
   background-color: black;
   grid-column: 1;
   grid-row: 1;
   z-index: 1;
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
-  outline-style: none;
-  outline-color: green;
-  outline-width: thick; 
 }
 
 #capture {
-  width: 960; 
-  height: 1280;
+  width: 640;
+  height: 480;
   grid-column: 1;
   grid-row: 1;
   z-index: 2;
@@ -81,8 +62,8 @@ h3 {
 }
 
 #capture1 {
-  width: 960; 
-  height: 1280;
+  width: 640;
+  height: 480;
   grid-column: 1;
   grid-row: 1;
   z-index: 0;
@@ -90,25 +71,30 @@ h3 {
   transform: scaleX(-1);
 }
 
-#face_cover {
-  width: 960; 
-  height: 1280;
+#best_capture {
+  width: 640;
+  height: 480;
   grid-column: 1;
   grid-row: 1;
-  background-color: rebeccapurple;
+  z-index: 3;
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  visibility: hidden;
+}
+
+#face_cover {
+  width: 640;
+  height: 480;
+  grid-column: 1;
+  grid-row: 1;
   z-index: 3;
   visibility: hidden;
 }
 
 #div_video {
   display: grid;
-  width: 960; 
-  height: 1280;
+  width: 640;
+  height: 480;
   margin: auto;
-}
-
-#liveness_error_msg {
-  color: greenyellow;  
-  margin-top: 1rem;
 }
 
