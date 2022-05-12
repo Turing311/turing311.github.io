@@ -16,7 +16,7 @@ Module.onRuntimeInitialized = function () {
     }
 
     var enc = new TextEncoder();
-    var licenseStr = "PRiRREuPCZ1m5ASgF7fcpgm0nBGhi8B2AblTE+h0k4Eb93ij+U3stRYNGdOk3TqB9LqyRo9GmtzmLln4KOxL418hdoH58IkFmCJWnLCyqFhr4BGsbRfajXWLpVQmSX6q7JBi7RH8Y38S4chhGHGJMsr/Jw+WPPuEV+EY5Gz7VsMkpKygP7wkjt9Q62uM8WGpsh1nyK4zA3td78cRxh/OvU3jW0O5pgmPDg5z2ZPZS/5aNaruKkOu0ioDbbl3Xq3c6c1hYkMGq01Kv4stsA98YF9YsIDUfpUfCXr4omvsXsu3IVSVpeoxaI1KonveyoBb1wnOvBi3+62/hDyU2AejKA==";
+    var licenseStr = "azwEj7aq06/Dn1nZi9EjZBnZuQgn86nU1nFZi1GTwH/shuUrkeSa2jLDqEymVZhF6cKb/dnsgtFUkiogubary180wCSc+SmA864iH36afgCicaj6GZvjEW86muy04b1DW/KP5DXXhrY64M3TTk2mEKaOHwtqPWpvW+eYNi8eC0g8JWUIQZP5U3aXlEiBCKKTKcLYSE1yohlCaemH9P1onmHUxEJrGatmbv2cZgFfaUIo8GlRDwm12UdqJlbnEZ4w/2wM22Pc4skGb8J0PDz8EQ1iNBXrZiUcs0lC87dFpAfphJyR1rAe97WI2q3QtYvQ+DVkDX/kNbcGDfC8wkGoag==";
     //   var licenseStr ='06406b07507c003066065077e07606307307506807207506e00500405605905801c05a05505b043'  
     stringArray = enc.encode(licenseStr)
     stringBuffer = _malloc(licenseStr.length + 1 * Int8Array.BYTES_PER_ELEMENT);
